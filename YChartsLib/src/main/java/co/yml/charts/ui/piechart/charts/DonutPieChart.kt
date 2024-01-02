@@ -145,6 +145,10 @@ fun DonutPieChart(
                 Modifier
                     .width(sideSize.dp)
                     .height(sideSize.dp)
+                    .background(
+                        if (pieChartConfig.isBackGroundTransparent) Color.Transparent
+                        else pieChartConfig.backgroundColor
+                    )
                     .pointerInput(true) {
                         detectTapGestures {
                             val clickedAngle = convertTouchEventPointToAngle(
@@ -202,6 +206,7 @@ fun DonutPieChart(
                                 PieChartConfig.LabelType.PERCENTAGE -> "${
                                     proportions[activePie].roundToInt()
                                 }%"
+
                                 PieChartConfig.LabelType.VALUE -> {
                                     isValue = true
                                     selectedSlice.value.toString()
@@ -223,6 +228,7 @@ fun DonutPieChart(
                             )
                         }
                     }
+
                     activePie == -1 && pieChartConfig.isSumVisible -> {
                         drawContext.canvas.nativeCanvas.apply {
                             val fontSize = pieChartConfig.labelFontSize.toPx()
